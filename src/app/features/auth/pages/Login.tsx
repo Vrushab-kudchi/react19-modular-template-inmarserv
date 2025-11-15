@@ -1,21 +1,9 @@
 import { FiMail, FiLock, FiEyeOff } from "react-icons/fi";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginFormValidation, type LoginFormValidation } from "../validation";
+import { useLoginForm } from "../hooks/useLoginForm";
 import FormErrorHandler from "../../../../components/FormErrorHandler";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValidation>({
-    resolver: zodResolver(loginFormValidation),
-  });
-
-  const onSubmit = (data: LoginFormValidation) => {
-    console.log(data);
-  };
+  const { register, errors, onSubmit } = useLoginForm();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
@@ -49,7 +37,7 @@ const Login = () => {
           </div>
 
           {/* Form */}
-          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-5" onSubmit={onSubmit}>
             {/* Email Input */}
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
