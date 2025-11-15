@@ -6,9 +6,11 @@ import { authService } from "../services/authService";
 import storage from "../../../../libs/storage";
 import { toast } from "sonner";
 import type { AxiosError } from "axios";
+import { useStore } from "../../../../store";
 
 export const useLoginForm = () => {
   const navigate = useNavigate();
+  const setAuth = useStore((state) => state.setAuth);
   const {
     register,
     handleSubmit,
@@ -21,6 +23,11 @@ export const useLoginForm = () => {
     try {
       const response = await authService.login(data);
       storage.setToken(response.access_token);
+      setAuth({
+        email: data.email,
+        name: response.user.name,
+        role: response.user.role,
+      });
       navigate("/");
     } catch (error) {
       const axiosError = error as AxiosError<{ message?: string }>;
