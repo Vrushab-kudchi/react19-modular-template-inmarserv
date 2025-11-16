@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { dashboardService } from "../services/dashboardService";
 import { useStore } from "../../../../store";
 import {
@@ -12,29 +12,31 @@ import {
 import type { Vessel } from "../types";
 
 const Dashboard = () => {
-  const { setVessels } = useStore();
+  const setVessels = useStore((state) => state.setVessels);
   const vessels = useStore((state) => state.vessels);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
-  const [loading, setLoading] = useState(true);
   const [totalVessels, setTotalVessels] = useState(0);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple calls even if component re-renders
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     const fetchDashboardData = async () => {
       try {
-        setLoading(true);
         const response = await dashboardService.getDashboardData();
         setVessels(response.vessels);
         setTotalVessels(response.totalVessels);
       } catch (error) {
         console.error("Failed to fetch dashboard data:", error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchDashboardData();
-  }, [setVessels]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredVessels = useMemo(() => {
     return vessels.filter((vessel) => {
@@ -71,14 +73,6 @@ const Dashboard = () => {
     return Array.from(new Set(vessels.map((v) => v.vesselType))).sort();
   }, [vessels]);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-transparent border-t-purple-500"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
@@ -100,7 +94,10 @@ const Dashboard = () => {
       {/* Search and Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1 relative group">
-          <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 group-focus-within:text-purple-500 transition-colors" />
+          <FaSearch
+            className="absolute left-4 top-1/2 text-gray-500 group-focus-within:text-purple-500 transition-colors z-10 pointer-events-none"
+            style={{ transform: "translateY(-50%)" }}
+          />
           <input
             type="text"
             placeholder="Search vessels..."

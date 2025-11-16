@@ -8,7 +8,8 @@ interface AdminLayoutProps {
 }
 
 export const AdminLayout = ({ children }: AdminLayoutProps) => {
-  const { sidebarOpen, toggleSidebar, closeSidebar } = useNavigation();
+  const { sidebarOpen, toggleSidebar, closeSidebar, isLoading } =
+    useNavigation();
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] relative overflow-hidden">
@@ -24,14 +25,22 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       <Navbar sidebarOpen={sidebarOpen} onToggleSidebar={toggleSidebar} />
       <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
 
-      {/* Main Content Area */}
       <main
         className={`pt-16 min-h-screen transition-all duration-300 ${
           sidebarOpen ? "lg:ml-64" : "lg:ml-0"
         }`}
       >
         <div className="p-4 sm:p-6 lg:p-8 relative z-10 text-white">
-          {children}
+          {/* Loading Overlay - keeps children mounted to prevent useEffect re-runs */}
+          {isLoading && (
+            <div className="fixed inset-0 bg-[#0a0a0f]/80 backdrop-blur-sm flex items-center justify-center z-50">
+              <div className="animate-spin rounded-full h-12 w-12 border-2 border-transparent border-t-purple-500"></div>
+            </div>
+          )}
+          {/* Always render children - use opacity to hide when loading */}
+          <div className={isLoading ? "opacity-50 pointer-events-none" : ""}>
+            {children}
+          </div>
         </div>
       </main>
     </div>

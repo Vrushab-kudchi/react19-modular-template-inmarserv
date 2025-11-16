@@ -1,5 +1,6 @@
 import axios from "axios";
 import storage from "./storage";
+import { useStore } from "../store";
 
 const BASE_URL = "http://inmarserv-api.daylink.in";
 
@@ -16,7 +17,23 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  const { setIsLoading } = useStore.getState();
+  setIsLoading(true);
+
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => {
+    const { setIsLoading } = useStore.getState();
+    setIsLoading(false);
+    return response;
+  },
+  (error) => {
+    const { setIsLoading } = useStore.getState();
+    setIsLoading(false);
+    return Promise.reject(error);
+  }
+);
 
 export default api;

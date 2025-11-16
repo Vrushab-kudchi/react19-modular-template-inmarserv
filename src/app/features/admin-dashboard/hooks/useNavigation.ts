@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import { useStore } from "../../../../store";
 
 export const useNavigation = () => {
-  // Default to open on desktop, closed on mobile
   const sidebarOpen = useStore((state) => state.sidebarOpen);
   const toggleSidebar = useStore((state) => state.toggleSidebar);
   const closeSidebar = useStore((state) => state.closeSidebar);
-
+  const isLoading = useStore((state) => state.isLoading);
   useEffect(() => {
     const handleResize = () => {
       // Only auto-adjust on initial load or when crossing breakpoint
@@ -26,5 +25,6 @@ export const useNavigation = () => {
     sidebarOpen,
     toggleSidebar,
     closeSidebar,
+    isLoading,
   };
 };
