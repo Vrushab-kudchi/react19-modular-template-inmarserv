@@ -6,15 +6,21 @@ import type { AuthSlice } from "./slice/useAuthSlice";
 import type { VesselsSlice } from "./slice/useVesselsSlice";
 import type { NavigationState } from "./slice/useNavigationSlice";
 import useNavigationSlice from "./slice/useNavigationSlice";
+import useDashboardSlice from "./slice/useDashboardSlice";
+import type { DashboardState } from "./slice/useDashboardSlice";
 
 // Combined state type
-export type StoreState = AuthSlice & VesselsSlice & NavigationState;
+export type StoreState = AuthSlice &
+  VesselsSlice &
+  NavigationState &
+  DashboardState;
 
 // Combined state creator with proper typing
 const useStoreCreator: StateCreator<StoreState> = (...args) => ({
   ...useAuthSlice(...args),
   ...useVesselsSlice(...args),
   ...useNavigationSlice(...args),
+  ...useDashboardSlice(...args),
 });
 
 export const useStore = create<StoreState>()(
