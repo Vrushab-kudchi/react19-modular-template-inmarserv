@@ -27,7 +27,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
 
       <main
         className={`pt-16 min-h-screen transition-all duration-300 ${
-          sidebarOpen ? "lg:ml-64" : "lg:ml-0"
+          sidebarOpen ? "ml-0 lg:ml-64" : "ml-0"
         }`}
       >
         <div className="p-4 sm:p-6 lg:p-8 relative z-10 text-white">

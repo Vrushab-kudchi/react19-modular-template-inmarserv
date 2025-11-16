@@ -9,7 +9,7 @@ export interface NavigationState {
 }
 
 const useNavigationSlice: StateCreator<NavigationState> = (set) => ({
-  sidebarOpen: false,
+  sidebarOpen: true, // Default to open on desktop for better UX
   isLoading: false,
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
   toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
