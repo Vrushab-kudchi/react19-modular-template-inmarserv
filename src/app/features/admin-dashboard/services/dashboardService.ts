@@ -11,7 +11,7 @@ export const dashboardService = {
   },
 
   getVesselModules: async () => {
-    const response: AxiosResponse<VesselResponse> = await api.get("/vessel");
+    const response: AxiosResponse<VesselResponse[]> = await api.get("/vessel");
     return response.data;
   },
 };

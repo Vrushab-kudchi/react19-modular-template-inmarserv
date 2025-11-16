@@ -3,7 +3,7 @@ import Login from "./features/auth/pages/Login";
 import PrivateRoutes from "../components/PrivateRoutes";
 import Dashboard from "./features/admin-dashboard/pages/Dashboard";
 import { AdminRoute } from "../components/AdminRoutes";
-import VesselModule from "./features/admin-dashboard/pages/Vessels";
+import VesselModule from "./features/admin-dashboard/pages/VesselModule";
 
 const router = createBrowserRouter([
   {
