@@ -29,7 +29,13 @@ export const useLoginForm = () => {
         role: response.user.role,
         modules: response.user.modules,
       });
-      navigate("/");
+      if (response.user.role === "super-admin") {
+        navigate("/admin/dashboard");
+      } else if (response.user.role === "client") {
+        navigate("/client/dashboard");
+      } else {
+        navigate("/engineer/dashboard");
+      }
     } catch (error) {
       const axiosError = error as AxiosError<{ message?: string }>;
       const errorMessage =

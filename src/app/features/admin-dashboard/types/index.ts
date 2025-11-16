@@ -1,24 +1,34 @@
-export type LoginFormData = {
+export type Vessel = {
+  _id: string;
+  clientId: string;
+  modulesId: string[];
+  name: string;
+  imoNumber: string;
+  mmsiNumber: string;
+  callSign: string;
+  flagState: string;
+  vesselType: string;
+  grossTonnage: number;
+  deadweight: number;
+  length: number;
+  width: number;
+  draft: number;
+  yearBuilt: number;
+  classificationSociety: string;
+  owner: string;
+  operator: string;
+  clientName: string;
+  status: string;
+  portOfRegistry: string;
+  homePort: string;
+  currentLocation: string;
+  createdBy: string;
   email: string;
-  password: string;
-};
-
-export type LoginResponse = {
-  access_token: string;
-  user: {
-    userId: string;
-    email: string;
-    name: string;
-    role: string;
-    modules: [
-      {
-        _id: string;
-        keyword: string;
-        name: string;
-        description: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-    ];
-  };
+  telephone: string;
+  sat_c: string;
+  code: string;
+  createdAt: string;
+  updatedAt: string;
+  certificateNumber: string;
+  expiryDate: string;
 };
