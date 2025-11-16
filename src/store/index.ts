@@ -4,14 +4,17 @@ import { createJSONStorage, persist, devtools } from "zustand/middleware";
 import useVesselsSlice from "./slice/useVesselsSlice";
 import type { AuthSlice } from "./slice/useAuthSlice";
 import type { VesselsSlice } from "./slice/useVesselsSlice";
+import type { NavigationState } from "./slice/useNavigationSlice";
+import useNavigationSlice from "./slice/useNavigationSlice";
 
 // Combined state type
-export type StoreState = AuthSlice & VesselsSlice;
+export type StoreState = AuthSlice & VesselsSlice & NavigationState;
 
 // Combined state creator with proper typing
 const useStoreCreator: StateCreator<StoreState> = (...args) => ({
   ...useAuthSlice(...args),
   ...useVesselsSlice(...args),
+  ...useNavigationSlice(...args),
 });
 
 export const useStore = create<StoreState>()(
@@ -25,6 +28,7 @@ export const useStore = create<StoreState>()(
         role: state.role,
         modules: state.modules,
         selectedModules: state.selectedModules,
+        sidebarOpen: state.sidebarOpen,
       }),
     })
   )

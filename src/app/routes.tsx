@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "./features/auth/pages/Login";
 import PrivateRoutes from "../components/PrivateRoutes";
 import Dashboard from "./features/admin-dashboard/pages/Dashboard";
+import { AdminRoute } from "../components/AdminRoutes";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,11 @@ const router = createBrowserRouter([
   },
   {
     path: "admin/dashboard",
-    element: <Dashboard />,
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
   },
   {
     path: "/login",

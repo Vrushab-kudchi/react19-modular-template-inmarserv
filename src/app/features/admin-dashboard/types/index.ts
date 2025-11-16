@@ -29,6 +29,13 @@ export type Vessel = {
   code: string;
   createdAt: string;
   updatedAt: string;
-  certificateNumber: string;
-  expiryDate: string;
+  certificateNumber?: string;
+  expiryDate?: string;
+  equipmentCount?: number;
+};
+
+export type DashboardResponse = {
+  message: string;
+  totalVessels: number;
+  vessels: Vessel[];
 };
