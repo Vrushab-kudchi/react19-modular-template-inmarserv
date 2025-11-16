@@ -3,6 +3,7 @@ import Login from "./features/auth/pages/Login";
 import PrivateRoutes from "../components/PrivateRoutes";
 import Dashboard from "./features/admin-dashboard/pages/Dashboard";
 import { AdminRoute } from "../components/AdminRoutes";
+import VesselModule from "./features/admin-dashboard/pages/Vessels";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
     element: (
       <AdminRoute>
         <Dashboard />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: "admin/vessels",
+    element: (
+      <AdminRoute>
+        <VesselModule />
       </AdminRoute>
     ),
   },
